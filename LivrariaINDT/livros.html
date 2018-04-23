@@ -1,0 +1,94 @@
+<div ng-controller="livroController">
+	
+	<nav class="navbar navbar-dark bg-primary cnavbar-expand-lg fixed-top justify-content-between">
+		<h2 class="text-white">Livraria INDT</h2>
+		<button type="button" class="btn btn-success text-right" ng-click="registrarLivro()">Novo Livro</button>
+		
+		<a href="#!/" class="btn btn-success">Autores</a>
+	</nav>
+
+	<div class="col-md-12" style="margin-top: 5%;">
+		
+		<!-- form campo pesquisa-->
+		<form class="form-inline">
+		    <div class="form-group">
+		        <label>Procurar: </label>
+		        <input type="text" ng-model="procurar" class="form-control" placeholder="Procurar...">
+		    </div>
+		</form>
+
+		<!-- Tabela Livraria -->
+		<table class="table">
+			<thead class="thead-dark text-center">
+				<tr>
+					<th scope="col" ng-click="ordenar('livro.title')">Titulo </th>
+					<!--<th scope="col">Autor</th>!-->
+					<th scope="col">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-center" ng-repeat="livro in livros|filter:procurar|orderBy:sortKey:reverse">
+					<td>{{ livro.title}}</td>
+					<!--<td>{{listaAutoresLivros.nome}}</td>-->
+					<td>
+						<button type="button" class="btn btn-warning text-white" id="btnEditar" ng-click="alterarLivro(livro)">editar</button> 
+						<button type="button" class="btn btn-danger" ng-click="modalExcluirLivro(livro)">excluir</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+			   
+
+		<!-- The ModalLivro -->
+		<div class="modal fade" id="myModalLivro">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">{{tituloLivroModal}}</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<label>Titulo do livro: </label><input type="text" ng-model="livro.title">
+						<label>Nome do autor: </label><input type="text" name="" ng-model="livro.authorId">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" ng-click="salvarLivro()">Salvar</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- The ModalExcluirLivro -->
+		<div class="modal fade" id="myModalExcluirLivro">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Excluir</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<label>{{ excluirLivroMensagem }}</label>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" ng-click="deletarLivro(lr)">Excluir</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
